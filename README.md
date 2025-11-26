@@ -34,7 +34,7 @@ pip install utt
 Verify the installation:
 
 ```bash
-utt --help
+utt --version
 ```
 
 ### Step 2: Install utt-balance
@@ -69,14 +69,14 @@ utt balance
 
 ### Example Output
 
-```
-┌──────────────┬─────────┬───────────┐
-│              │  Worked │ Remaining │
-├──────────────┼─────────┼───────────┤
-│ Today        │   6h30  │     1h30  │
-│ Since Sunday │  32h15  │     7h45  │
-└──────────────┴─────────┴───────────┘
-```
+**🟢 Under target — time remaining in your budget:**
+![Under target](docs/images/under-target-example.png)
+
+**🟡 At target — you've hit your limit:**
+![At target](docs/images/at-target-example.png)
+
+**🔴 Over target — you've exceeded your budget:**
+![Over target](docs/images/over-target-example.png)
 
 ### Options
 
@@ -84,23 +84,65 @@ utt balance
 |--------|---------|-------------|
 | `--daily-hrs` | 8 | Target working hours per day |
 | `--weekly-hrs` | 40 | Target working hours per week |
-| `--week-start` | sunday | Day the work week starts |
+| `--week-start` | sunday | Day the work week starts (`monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday`) |
 
 ### Examples
 
-**Custom daily target (6 hours):**
+**Default usage** (8h/day, 40h/week, week starts Sunday):
+```bash
+utt balance
+```
+
+**Custom daily target** — set a 6-hour workday with `--daily-hrs`:
 ```bash
 utt balance --daily-hrs 6
 ```
-
-**Custom weekly target with Monday as week start:**
-```bash
-utt balance --weekly-hrs 35 --week-start monday
+```
+┌──────────────┬─────────┬───────────┐
+│              │  Worked │ Remaining │
+├──────────────┼─────────┼───────────┤
+│ Today        │   5h00  │     1h00  │  ← 1h until 6h target
+│ Since Sunday │  25h00  │    15h00  │
+└──────────────┴─────────┴───────────┘
 ```
 
-**Part-time schedule (4 hours/day, 20 hours/week):**
+**Custom weekly target** — set a 35-hour work week with `--weekly-hrs`:
+```bash
+utt balance --weekly-hrs 35
+```
+```
+┌──────────────┬─────────┬───────────┐
+│              │  Worked │ Remaining │
+├──────────────┼─────────┼───────────┤
+│ Today        │   6h30  │     1h30  │
+│ Since Sunday │  28h00  │     7h00  │  ← 7h until 35h target
+└──────────────┴─────────┴───────────┘
+```
+
+**Change week start day** — use Monday with `--week-start`:
+```bash
+utt balance --week-start monday
+```
+```
+┌──────────────┬─────────┬───────────┐
+│              │  Worked │ Remaining │
+├──────────────┼─────────┼───────────┤
+│ Today        │   6h30  │     1h30  │
+│ Since Monday │  22h30  │    17h30  │  ← week starts Monday
+└──────────────┴─────────┴───────────┘
+```
+
+**Part-time schedule** — combine options for 4h/day, 20h/week:
 ```bash
 utt balance --daily-hrs 4 --weekly-hrs 20
+```
+```
+┌──────────────┬─────────┬───────────┐
+│              │  Worked │ Remaining │
+├──────────────┼─────────┼───────────┤
+│ Today        │   3h30  │     0h30  │  ← 30min until 4h target
+│ Since Sunday │  15h00  │     5h00  │  ← 5h until 20h target
+└──────────────┴─────────┴───────────┘
 ```
 
 ## Color Coding
@@ -121,9 +163,29 @@ This plugin uses UTT's native plugin API to:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details.
 
-MIT is compatible with UTT's GPL-3.0 license, allowing maximum flexibility for users.
+## Development
+
+### Running Tests
+
+To run the test suite, first install the development dependencies:
+
+```bash
+pip install -e ".[dev]"
+```
+
+Then run the tests with pytest:
+
+```bash
+pytest
+```
+
+For coverage reporting:
+
+```bash
+pytest --cov=utt.plugins.balance --cov-report=term-missing
+```
 
 ## Contributing
 
