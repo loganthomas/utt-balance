@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "utt-balance"
@@ -45,13 +45,8 @@ dev = [
     "pre-commit>=3.0",
 ]
 
-[tool.setuptools.packages.find]
-where = ["src"]
-include = ["utt.*", "utt_balance"]
-namespaces = true
-
-[tool.setuptools.package-data]
-"*" = ["py.typed"]
+[tool.hatch.build.targets.wheel]
+packages = ["src/utt", "src/utt_balance"]
 
 [tool.ruff]
 line-length = 100
