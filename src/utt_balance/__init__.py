@@ -33,7 +33,5 @@ For more information, see: https://github.com/loganthomas/utt-balance
 """
 
 __version__ = "0.1.0"
-__author__ = "Logan Thomas"
-__email__ = "logan@datacentriq.net"
 
-__all__ = ["__version__", "__author__", "__email__"]
+__all__ = ["__version__"]
