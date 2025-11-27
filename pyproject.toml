@@ -36,6 +36,9 @@ Homepage = "https://github.com/loganthomas/utt-balance"
 Repository = "https://github.com/loganthomas/utt-balance"
 Issues = "https://github.com/loganthomas/utt-balance/issues"
 
+[project.entry-points."utt.plugins"]
+balance = "utt.plugins.balance"
+
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0",
