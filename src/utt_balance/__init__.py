@@ -32,6 +32,6 @@ Check with custom targets::
 For more information, see: https://github.com/loganthomas/utt-balance
 """
 
-__version__ = "0.1.0-rc.1"
+__version__ = "0.1.0-rc.2"
 
 __all__ = ["__version__"]

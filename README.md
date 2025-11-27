@@ -187,7 +187,7 @@ pytest
 For coverage reporting:
 
 ```bash
-pytest --cov=utt.plugins.balance --cov-report=term-missing
+pytest --cov=utt_balance.balance --cov-report=term-missing
 ```
 
 ### Linting & Formatting

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "utt-balance"
-version = "0.1.0"
+version = "0.1.0-rc.2"
 description = "A UTT plugin to check worked time balance against daily/weekly targets"
 readme = "README.md"
 license = "GPL-3.0-only"
@@ -46,7 +46,13 @@ dev = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/utt", "src/utt_balance"]
+packages = ["src/utt_balance"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/utt/plugins/balance.py" = "utt/plugins/balance.py"
+
+[tool.hatch.build.targets.editable]
+dev-mode-dirs = ["src"]
 
 [tool.ruff]
 line-length = 100
