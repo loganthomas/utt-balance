@@ -70,13 +70,16 @@ utt balance
 ### Example Output
 
 **🟢 Under target — time remaining in your budget:**
-![Under target](docs/images/under-target-example.png)
+
+![Under target](docs/images/under-target-example.webp)
 
 **🟡 At target — you've hit your limit:**
-![At target](docs/images/at-target-example.png)
+
+![At target](docs/images/at-target-example.webp)
 
 **🔴 Over target — you've exceeded your budget:**
-![Over target](docs/images/over-target-example.png)
+
+![Over target](docs/images/over-target-example.webp)
 
 ### Options
 
@@ -230,7 +233,47 @@ pre-commit run --all-files
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Here's how to get started:
+
+### Setting Up for Development
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/loganthomas/utt-balance.git
+   cd utt-balance
+   ```
+
+2. **Create a virtual environment:**
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+
+3. **Install in editable mode with dev dependencies:**
+   ```bash
+   pip install -e ".[dev]"
+   ```
+
+4. **Install pre-commit hooks:**
+   ```bash
+   pre-commit install
+   ```
+
+### Submitting Changes
+
+1. Create a new branch for your feature or fix
+2. Make your changes following the code style guidelines
+3. Ensure all tests pass: `pytest`
+4. Ensure code passes linting: `ruff check . && ruff format --check .`
+5. Submit a pull request with a clear description of your changes
+
+### Code Style Guidelines
+
+- Follow [PEP 8](https://peps.python.org/pep-0008/) conventions
+- Use type hints for all function signatures
+- Write docstrings in [NumPy style](https://numpydoc.readthedocs.io/en/latest/format.html)
+- Keep functions focused and single-purpose
+- Prefer explicit over implicit
 
 ## Related
 

@@ -2,12 +2,32 @@
 utt-balance: A UTT plugin to check worked time balance against daily/weekly targets.
 
 This plugin adds a 'balance' command to UTT that shows:
+
 - Worked hours for today and the current week
 - Remaining hours until daily/weekly targets
 - Color-coded output (green=under, yellow=at, red=over target)
 
-Usage:
+Installation
+------------
+Install via pip::
+
+    pip install utt-balance
+
+Usage
+-----
+After installation, the balance command is available via UTT::
+
     utt balance [--daily-hrs HOURS] [--weekly-hrs HOURS] [--week-start DAY]
+
+Examples
+--------
+Check balance with default settings (8h/day, 40h/week)::
+
+    utt balance
+
+Check with custom targets::
+
+    utt balance --daily-hrs 6 --weekly-hrs 30 --week-start monday
 
 For more information, see: https://github.com/loganthomas/utt-balance
 """
@@ -15,3 +35,5 @@ For more information, see: https://github.com/loganthomas/utt-balance
 __version__ = "0.1.0"
 __author__ = "Logan Thomas"
 __email__ = "logan@datacentriq.net"
+
+__all__ = ["__version__", "__author__", "__email__"]
