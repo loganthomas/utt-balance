@@ -5,9 +5,9 @@ import datetime
 import io
 
 import pytest
-
 from utt.api import _v1
-from utt.plugins.balance import BalanceHandler, add_args, balance_command
+
+from utt_balance.balance import BalanceHandler, add_args, balance_command
 
 
 @pytest.fixture

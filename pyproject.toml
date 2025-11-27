@@ -37,7 +37,7 @@ Repository = "https://github.com/loganthomas/utt-balance"
 Issues = "https://github.com/loganthomas/utt-balance/issues"
 
 [project.entry-points."utt.plugins"]
-balance = "utt.plugins.balance"
+balance = "utt_balance.balance"
 
 [project.optional-dependencies]
 dev = [
@@ -49,7 +49,7 @@ dev = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/utt", "src/utt_balance"]
+packages = ["src/utt_balance"]
 
 [tool.ruff]
 line-length = 100
