@@ -19,6 +19,7 @@ from collections.abc import Iterator
 from rich.console import Console
 from rich.table import Table
 from rich.text import Text
+
 from utt.api import _v1
 
 # Day names in weekday order (Monday=0 through Sunday=6)
