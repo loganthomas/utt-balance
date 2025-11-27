@@ -187,6 +187,47 @@ For coverage reporting:
 pytest --cov=utt.plugins.balance --cov-report=term-missing
 ```
 
+### Linting & Formatting
+
+**Run ruff** (linter, formatter, and import sorting):
+```bash
+# Check for linting errors
+ruff check .
+
+# Auto-fix linting errors (including import sorting)
+ruff check --fix .
+
+# Format code
+ruff format .
+```
+
+### Type Checking
+
+**Run ty** (type checker):
+```bash
+ty check src/
+```
+
+### Run All Checks
+
+```bash
+ruff check --fix . && ruff format . && ty check src/ && pytest
+```
+
+### Pre-commit Hooks
+
+Install pre-commit hooks to automatically run checks before each commit:
+
+```bash
+pre-commit install
+```
+
+Run hooks manually on all files:
+
+```bash
+pre-commit run --all-files
+```
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -195,4 +236,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 - [UTT (Ultimate Time Tracker)](https://github.com/larose/utt) - The time tracking tool this plugin extends
 - [UTT Plugin Documentation](https://github.com/larose/utt/blob/master/docs/PLUGINS.md) - How to create UTT plugins
-

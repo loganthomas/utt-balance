@@ -1,4 +1,5 @@
 """Unit tests for the balance plugin."""
+
 import argparse
 import datetime
 import io
@@ -173,8 +174,7 @@ class TestCalculateWorkedTime:
 
         handler = BalanceHandler(mock_args, now, entries, mock_output)
         worked = handler._calculate_worked_time(
-            datetime.date(2025, 11, 26),
-            datetime.date(2025, 11, 26)
+            datetime.date(2025, 11, 26), datetime.date(2025, 11, 26)
         )
 
         # Only "work: task" (1h) should be counted, not "lunch **" (3h break)
@@ -190,8 +190,7 @@ class TestCalculateWorkedTime:
 
         handler = BalanceHandler(mock_args, now, entries, mock_output)
         worked = handler._calculate_worked_time(
-            datetime.date(2025, 11, 26),
-            datetime.date(2025, 11, 26)
+            datetime.date(2025, 11, 26), datetime.date(2025, 11, 26)
         )
 
         # Overnight "hello" activity should be excluded
@@ -206,8 +205,7 @@ class TestCalculateWorkedTime:
 
         handler = BalanceHandler(mock_args, now, entries, mock_output)
         worked = handler._calculate_worked_time(
-            datetime.date(2025, 11, 26),
-            datetime.date(2025, 11, 26)
+            datetime.date(2025, 11, 26), datetime.date(2025, 11, 26)
         )
 
         assert worked == datetime.timedelta(hours=8)
@@ -218,8 +216,7 @@ class TestCalculateWorkedTime:
 
         handler = BalanceHandler(mock_args, now, entries, mock_output)
         worked = handler._calculate_worked_time(
-            datetime.date(2025, 11, 26),
-            datetime.date(2025, 11, 26)
+            datetime.date(2025, 11, 26), datetime.date(2025, 11, 26)
         )
 
         assert worked == datetime.timedelta()
@@ -238,9 +235,7 @@ class TestFilterAndClipActivities:
         handler = BalanceHandler(mock_args, now, entries, mock_output)
         activities = list(handler._entries_to_activities())
         filtered = handler._filter_and_clip_activities(
-            activities,
-            datetime.date(2025, 11, 26),
-            datetime.date(2025, 11, 26)
+            activities, datetime.date(2025, 11, 26), datetime.date(2025, 11, 26)
         )
 
         # Activity spans from Nov 25 22:00 to Nov 26 02:00
@@ -259,9 +254,7 @@ class TestFilterAndClipActivities:
         handler = BalanceHandler(mock_args, now, entries, mock_output)
         activities = list(handler._entries_to_activities())
         filtered = handler._filter_and_clip_activities(
-            activities,
-            datetime.date(2025, 11, 26),
-            datetime.date(2025, 11, 26)
+            activities, datetime.date(2025, 11, 26), datetime.date(2025, 11, 26)
         )
 
         # Activities entirely before Nov 26 should be excluded
@@ -278,9 +271,7 @@ class TestFilterAndClipActivities:
         handler = BalanceHandler(mock_args, now, entries, mock_output)
         activities = list(handler._entries_to_activities())
         filtered = handler._filter_and_clip_activities(
-            activities,
-            datetime.date(2025, 11, 26),
-            datetime.date(2025, 11, 26)
+            activities, datetime.date(2025, 11, 26), datetime.date(2025, 11, 26)
         )
 
         # Overnight "hello" gets clipped to Nov 26 portion, plus "work: today"
@@ -532,4 +523,3 @@ class TestBalanceCommand:
 
     def test_command_add_args(self):
         assert balance_command.add_args == add_args
-

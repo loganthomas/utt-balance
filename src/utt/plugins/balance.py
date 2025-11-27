@@ -4,9 +4,9 @@ UTT Balance Plugin - Check worked time balance against daily/weekly targets.
 This plugin adds a 'balance' command to UTT that displays worked hours
 and remaining time for today and the current week with color-coded output.
 """
+
 import argparse
 import datetime
-from typing import List
 
 from rich.console import Console
 from rich.table import Table
@@ -53,10 +53,7 @@ class BalanceHandler:
 
     def _get_week_start_date(self, today: datetime.date) -> datetime.date:
         """Calculate the start date of the current week based on configured week start day."""
-        day_names = [
-            "monday", "tuesday", "wednesday", "thursday",
-            "friday", "saturday", "sunday"
-        ]
+        day_names = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
         week_start_index = day_names.index(self._args.week_start.lower())
         today_index = today.weekday()
 
@@ -85,9 +82,9 @@ class BalanceHandler:
         """
         activities = self._get_activities_for_range(start_date, end_date)
         work_activities = [
-            a for a in activities
-            if a.type == _v1.Activity.Type.WORK
-            and a.name.name != _v1.HELLO_ENTRY_NAME
+            a
+            for a in activities
+            if a.type == _v1.Activity.Type.WORK and a.name.name != _v1.HELLO_ENTRY_NAME
         ]
         return sum((a.duration for a in work_activities), datetime.timedelta())
 
@@ -95,7 +92,7 @@ class BalanceHandler:
         self,
         start_date: datetime.date,
         end_date: datetime.date,
-    ) -> List[_v1.Activity]:
+    ) -> list[_v1.Activity]:
         """Get activities within the specified date range."""
         activities = list(self._entries_to_activities())
         return self._filter_and_clip_activities(activities, start_date, end_date)
@@ -115,17 +112,13 @@ class BalanceHandler:
 
     def _filter_and_clip_activities(
         self,
-        activities: List[_v1.Activity],
+        activities: list[_v1.Activity],
         start_date: datetime.date,
         end_date: datetime.date,
-    ) -> List[_v1.Activity]:
+    ) -> list[_v1.Activity]:
         """Filter activities to date range and clip those that span boundaries."""
-        start_dt = datetime.datetime(
-            start_date.year, start_date.month, start_date.day
-        )
-        end_dt = datetime.datetime(
-            end_date.year, end_date.month, end_date.day, 23, 59, 59, 999999
-        )
+        start_dt = datetime.datetime(start_date.year, start_date.month, start_date.day)
+        end_dt = datetime.datetime(end_date.year, end_date.month, end_date.day, 23, 59, 59, 999999)
 
         result = []
         for activity in activities:
@@ -165,9 +158,7 @@ class BalanceHandler:
         console = Console(file=self._output)
         console.print(table)
 
-    def _format_worked(
-        self, worked: datetime.timedelta, target: datetime.timedelta
-    ) -> Text:
+    def _format_worked(self, worked: datetime.timedelta, target: datetime.timedelta) -> Text:
         """Format worked time with appropriate color based on target."""
         text = self._format_timedelta(worked)
         if worked == target:
@@ -218,10 +209,7 @@ def add_args(parser: argparse.ArgumentParser) -> None:
         "--week-start",
         type=str,
         default="sunday",
-        choices=[
-            "monday", "tuesday", "wednesday", "thursday",
-            "friday", "saturday", "sunday"
-        ],
+        choices=["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
         help="Day the work week starts (default: sunday)",
     )
 
@@ -229,7 +217,7 @@ def add_args(parser: argparse.ArgumentParser) -> None:
 balance_command = _v1.Command(
     name="balance",
     description="Show worked time balance against daily/weekly targets",
-    handler_class=BalanceHandler,
+    handler_class=BalanceHandler,  # type: ignore[arg-type]
     add_args=add_args,
 )
 

@@ -191,14 +191,14 @@ class BalanceHandler:
     def __call__(self):
         # Filter working activities
         work_activities = [a for a in self._activities if a.type == _v1.Activity.Type.WORK]
-        
+
         # Calculate total worked time
         worked_time = sum((a.duration for a in work_activities), timedelta())
-        
+
         # Calculate remaining vs target
         target = timedelta(hours=self._args.daily_hours)
         remaining = target - worked_time
-        
+
         # Display with Rich
         self._display(worked_time, remaining)
 ```
@@ -301,4 +301,3 @@ utt-balance/
 2. Do you want configurable targets via UTT's config file or just CLI args?
 3. Should it show historical data (e.g., balance for previous weeks)?
 4. Do you want an option to hide the current in-progress activity?
-
