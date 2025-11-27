@@ -1,6 +1,6 @@
 # utt-balance
 
-A [UTT](https://github.com/larose/utt) plugin that shows your worked time balance against daily and weekly targets.
+A [`utt`](https://github.com/larose/utt) plugin that shows your worked time balance against daily and weekly targets.
 
 ## Why utt-balance?
 
@@ -19,13 +19,13 @@ Work ebbs and flows—certain days are more demanding than others, and that's ok
 - 📊 **Daily & Weekly Tracking** - See worked hours and remaining time at a glance
 - 🎨 **Color-coded Output** - Green (under target), Yellow (at target), Red (over/negative)
 - ⚙️ **Configurable Targets** - Set custom daily hours, weekly hours, and week start day
-- 🔌 **Native UTT Integration** - Uses UTT's plugin API for seamless integration
+- 🔌 **Native `utt` Integration** - Uses `utt`'s plugin API for seamless integration
 
 ## Installation
 
-### Step 1: Install UTT
+### Step 1: Install `utt`
 
-First, install [UTT (Ultimate Time Tracker)](https://github.com/larose/utt):
+First, install [`utt` (Ultimate Time Tracker)](https://github.com/larose/utt):
 
 ```bash
 pip install utt
@@ -45,7 +45,7 @@ Install the plugin:
 pip install utt-balance
 ```
 
-That's it! The plugin is automatically discovered by UTT. No additional configuration needed.
+That's it! The plugin is automatically discovered by `utt`. No additional configuration needed.
 
 ### Verify Installation
 
@@ -57,11 +57,11 @@ utt balance --help
 
 **Requirements:**
 - Python 3.10+
-- UTT >= 1.0
+- `utt` >= 1.0
 
 ## Usage
 
-After installation, a new `balance` command is available in UTT:
+After installation, a new `balance` command is available in `utt`:
 
 ```bash
 utt balance
@@ -158,7 +158,7 @@ utt balance --daily-hrs 4 --weekly-hrs 20
 
 ## How It Works
 
-This plugin uses UTT's native plugin API to:
+This plugin uses `utt`'s native plugin API to:
 1. Access your time entries directly (no subprocess calls)
 2. Filter activities for today and the current week
 3. Calculate total working time (excludes breaks marked with `**`)
@@ -277,5 +277,5 @@ Contributions are welcome! Here's how to get started:
 
 ## Related
 
-- [UTT (Ultimate Time Tracker)](https://github.com/larose/utt) - The time tracking tool this plugin extends
-- [UTT Plugin Documentation](https://github.com/larose/utt/blob/master/docs/PLUGINS.md) - How to create UTT plugins
+- [`utt` (Ultimate Time Tracker)](https://github.com/larose/utt) - The time tracking tool this plugin extends
+- [`utt` Plugin Documentation](https://github.com/larose/utt/blob/master/docs/PLUGINS.md) - How to create `utt` plugins
