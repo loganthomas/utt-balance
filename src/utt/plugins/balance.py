@@ -1,7 +1,7 @@
 """
-UTT Balance Plugin - Check worked time balance against daily/weekly targets.
+utt Balance Plugin - Check worked time balance against daily/weekly targets.
 
-This plugin adds a 'balance' command to UTT that displays worked hours
+This plugin adds a 'balance' command to utt that displays worked hours
 and remaining time for today and the current week with color-coded output.
 
 Example
@@ -58,15 +58,15 @@ class BalanceHandler:
         Parsed command-line arguments containing daily_hrs, weekly_hrs,
         and week_start configuration.
     now : _v1.Now
-        Current datetime provided by UTT's dependency injection.
+        Current datetime provided by utt's dependency injection.
     entries : _v1.Entries
-        Time entries from the UTT log file.
+        Time entries from the utt log file.
     output : _v1.Output
         Output stream for rendering the results table.
 
     Examples
     --------
-    The handler is typically instantiated by UTT's plugin system:
+    The handler is typically instantiated by utt's plugin system:
 
     >>> handler = BalanceHandler(args, now, entries, output)
     >>> handler()  # Displays the balance table
@@ -421,7 +421,7 @@ def add_args(parser: argparse.ArgumentParser) -> None:
     )
 
 
-# Register the balance command with UTT
+# Register the balance command with utt
 balance_command = _v1.Command(
     name="balance",
     description="Show worked time balance against daily/weekly targets",
