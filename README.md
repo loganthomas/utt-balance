@@ -90,7 +90,7 @@ utt balance
 | `--week-start` | sunday   | Day the work week starts       |
 
 > [!NOTE]
-> `--week-start` values:** `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday`
+> **`--week-start` values:** `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday`
 
 ### Examples
 
