@@ -83,11 +83,11 @@ utt balance
 
 ### Options
 
-| Option         | Default  | Description |
-|----------------|----------|-------------|
-| `--daily-hrs`  | 8        | Target working hours per day |
-| `--weekly-hrs` | 40       | Target working hours per week |
-| `--week-start` | sunday   | Day the work week starts (`monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday`) |
+| Option                | Default    | Description                                                                                                |
+|-----------------------|------------|------------------------------------------------------------------------------------------------------------|
+| `--daily-hrs`         | 8          | Target working hours per day                                                                               |
+| `--weekly-hrs`        | 40         | Target working hours per week                                                                              |
+| `--week-start`        | sunday     | Day the work week starts (`monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday`)    |
 
 ### Examples
 
