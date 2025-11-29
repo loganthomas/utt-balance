@@ -1,6 +1,6 @@
 # utt-balance
 
-[![CI - Test](https://github.com/loganthomas/utt-balance/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/loganthomas/utt-balance/actions/workflows/unit-tests.yml)
+[![CI - Test](https://github.com/loganthomas/utt-balance/actions/workflows/unit-tests.yml/badge.svg?branch=main)](https://github.com/loganthomas/utt-balance/actions/workflows/unit-tests.yml)
 [![PyPI Latest Release](https://img.shields.io/pypi/v/utt-balance.svg)](https://pypi.org/project/utt-balance/)
 [![PyPI Downloads](https://img.shields.io/pypi/dm/utt-balance.svg?label=PyPI%20downloads)](https://pypi.org/project/utt-balance/)
 [![License - GPL-3.0](https://img.shields.io/pypi/l/utt-balance.svg)](https://github.com/loganthomas/utt-balance/blob/main/LICENSE)
