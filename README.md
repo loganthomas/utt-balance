@@ -1,5 +1,11 @@
 # utt-balance
 
+[![CI - Test](https://github.com/loganthomas/utt-balance/actions/workflows/unit-tests.yml/badge.svg?branch=main)](https://github.com/loganthomas/utt-balance/actions/workflows/unit-tests.yml)
+[![PyPI Latest Release](https://img.shields.io/pypi/v/utt-balance.svg)](https://pypi.org/project/utt-balance/)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/utt-balance.svg?label=PyPI%20downloads)](https://pypi.org/project/utt-balance/)
+[![License - GPL-3.0](https://img.shields.io/pypi/l/utt-balance.svg)](https://github.com/loganthomas/utt-balance/blob/main/LICENSE)
+[![Python Versions](https://img.shields.io/pypi/pyversions/utt-balance.svg)](https://pypi.org/project/utt-balance/)
+
 A [`utt`](https://github.com/larose/utt) plugin that shows your worked time balance against daily and weekly targets.
 
 ## Why utt-balance?
@@ -83,11 +89,14 @@ utt balance
 
 ### Options
 
-| Option | Default | Description |
-|--------|---------|-------------|
-| `--daily-hrs` | 8 | Target working hours per day |
-| `--weekly-hrs` | 40 | Target working hours per week |
-| `--week-start` | sunday | Day the work week starts (`monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday`) |
+| Option         | Default  | Description                    |
+|----------------|----------|--------------------------------|
+| `--daily-hrs`  | 8        | Target working hours per day   |
+| `--weekly-hrs` | 40       | Target working hours per week  |
+| `--week-start` | sunday   | Day the work week starts       |
+
+> [!NOTE]
+> **`--week-start` values:** `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `sunday`
 
 ### Examples
 
