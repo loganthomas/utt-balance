@@ -34,5 +34,5 @@ jobs:
       - name: Run tests
         run: pytest
 
-      - name: Complete messsge
+      - name: Complete message
         run: echo "unit tests completed"

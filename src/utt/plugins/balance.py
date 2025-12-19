@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import datetime
 from collections.abc import Iterator
+from itertools import pairwise
 
 from rich.console import Console
 from rich.table import Table
@@ -206,10 +207,7 @@ class BalanceHandler:
         _v1.Activity
             Activity objects derived from consecutive entry pairs.
         """
-        entries = list(self._entries)
-        for i in range(len(entries) - 1):
-            prev_entry = entries[i]
-            next_entry = entries[i + 1]
+        for prev_entry, next_entry in pairwise(self._entries):
             yield _v1.Activity(
                 next_entry.name,
                 prev_entry.datetime,
@@ -245,8 +243,8 @@ class BalanceHandler:
             Activities within the range, with boundary-spanning activities
             clipped to the range.
         """
-        start_dt = datetime.datetime(start_date.year, start_date.month, start_date.day)
-        end_dt = datetime.datetime(end_date.year, end_date.month, end_date.day, 23, 59, 59, 999999)
+        start_dt = datetime.datetime.combine(start_date, datetime.time.min)
+        end_dt = datetime.datetime.combine(end_date, datetime.time.max)
 
         result = []
         for activity in activities:
@@ -416,7 +414,7 @@ def add_args(parser: argparse.ArgumentParser) -> None:
         "--week-start",
         type=str,
         default=DEFAULT_WEEK_START,
-        choices=list(DAY_NAMES),
+        choices=DAY_NAMES,
         help=f"Day the work week starts (default: {DEFAULT_WEEK_START})",
     )
 
