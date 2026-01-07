@@ -112,8 +112,8 @@ class TestEntriesToActivities:
     def test_two_entries_one_activity(self, mock_args, mock_output):
         now = datetime.datetime(2025, 11, 26, 17, 0, 0)
         entries = [
-            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False),
-            _v1.Entry(datetime.datetime(2025, 11, 26, 17, 0), "work: task", False),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 17, 0), "work: task", False, None),
         ]
 
         handler = BalanceHandler(mock_args, now, entries, mock_output)
@@ -126,9 +126,9 @@ class TestEntriesToActivities:
     def test_three_entries_two_activities(self, mock_args, mock_output):
         now = datetime.datetime(2025, 11, 26, 17, 0, 0)
         entries = [
-            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False),
-            _v1.Entry(datetime.datetime(2025, 11, 26, 12, 0), "lunch **", False),
-            _v1.Entry(datetime.datetime(2025, 11, 26, 13, 0), "work: task", False),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 12, 0), "lunch **", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 13, 0), "work: task", False, None),
         ]
 
         handler = BalanceHandler(mock_args, now, entries, mock_output)
@@ -143,7 +143,7 @@ class TestEntriesToActivities:
     def test_single_entry_no_activities(self, mock_args, mock_output):
         now = datetime.datetime(2025, 11, 26, 9, 0, 0)
         entries = [
-            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False, None),
         ]
 
         handler = BalanceHandler(mock_args, now, entries, mock_output)
@@ -160,6 +160,44 @@ class TestEntriesToActivities:
 
         assert len(activities) == 0
 
+    def test_activity_preserves_entry_comment(self, mock_args, mock_output):
+        """Regression test: Activity must include comment from Entry.
+
+        This test ensures that when entries with comments are converted to
+        activities, the comment is properly passed through. Without this,
+        the Activity constructor raises TypeError for missing 'comment' arg.
+        """
+        now = datetime.datetime(2025, 11, 26, 17, 0, 0)
+        entries = [
+            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False, None),
+            _v1.Entry(
+                datetime.datetime(2025, 11, 26, 17, 0),
+                "work: task",
+                False,
+                "working on feature X",
+            ),
+        ]
+
+        handler = BalanceHandler(mock_args, now, entries, mock_output)
+        activities = list(handler._entries_to_activities())
+
+        assert len(activities) == 1
+        assert activities[0].comment == "working on feature X"
+
+    def test_activity_handles_none_comment(self, mock_args, mock_output):
+        """Regression test: Activity handles None comment gracefully."""
+        now = datetime.datetime(2025, 11, 26, 17, 0, 0)
+        entries = [
+            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 17, 0), "work: task", False, None),
+        ]
+
+        handler = BalanceHandler(mock_args, now, entries, mock_output)
+        activities = list(handler._entries_to_activities())
+
+        assert len(activities) == 1
+        assert activities[0].comment is None
+
 
 class TestCalculateWorkedTime:
     """Tests for worked time calculation."""
@@ -167,9 +205,9 @@ class TestCalculateWorkedTime:
     def test_excludes_breaks(self, mock_args, mock_output):
         now = datetime.datetime(2025, 11, 26, 17, 0, 0)
         entries = [
-            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False),
-            _v1.Entry(datetime.datetime(2025, 11, 26, 12, 0), "lunch **", False),
-            _v1.Entry(datetime.datetime(2025, 11, 26, 13, 0), "work: task", False),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 12, 0), "lunch **", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 13, 0), "work: task", False, None),
         ]
 
         handler = BalanceHandler(mock_args, now, entries, mock_output)
@@ -183,9 +221,9 @@ class TestCalculateWorkedTime:
     def test_excludes_hello_entries(self, mock_args, mock_output):
         now = datetime.datetime(2025, 11, 26, 17, 0, 0)
         entries = [
-            _v1.Entry(datetime.datetime(2025, 11, 25, 17, 0), "work: done", False),
-            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False),
-            _v1.Entry(datetime.datetime(2025, 11, 26, 17, 0), "work: task", False),
+            _v1.Entry(datetime.datetime(2025, 11, 25, 17, 0), "work: done", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 17, 0), "work: task", False, None),
         ]
 
         handler = BalanceHandler(mock_args, now, entries, mock_output)
@@ -199,8 +237,8 @@ class TestCalculateWorkedTime:
     def test_full_work_day(self, mock_args, mock_output):
         now = datetime.datetime(2025, 11, 26, 17, 0, 0)
         entries = [
-            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False),
-            _v1.Entry(datetime.datetime(2025, 11, 26, 17, 0), "work: task", False),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 17, 0), "work: task", False, None),
         ]
 
         handler = BalanceHandler(mock_args, now, entries, mock_output)
@@ -228,8 +266,8 @@ class TestFilterAndClipActivities:
     def test_clips_activity_spanning_date_boundary(self, mock_args, mock_output):
         now = datetime.datetime(2025, 11, 26, 17, 0, 0)
         entries = [
-            _v1.Entry(datetime.datetime(2025, 11, 25, 22, 0), "hello", False),
-            _v1.Entry(datetime.datetime(2025, 11, 26, 2, 0), "work: late", False),
+            _v1.Entry(datetime.datetime(2025, 11, 25, 22, 0), "hello", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 2, 0), "work: late", False, None),
         ]
 
         handler = BalanceHandler(mock_args, now, entries, mock_output)
@@ -246,9 +284,9 @@ class TestFilterAndClipActivities:
     def test_excludes_activities_fully_outside_range(self, mock_args, mock_output):
         now = datetime.datetime(2025, 11, 26, 17, 0, 0)
         entries = [
-            _v1.Entry(datetime.datetime(2025, 11, 24, 9, 0), "hello", False),
-            _v1.Entry(datetime.datetime(2025, 11, 24, 17, 0), "work: old", False),
-            _v1.Entry(datetime.datetime(2025, 11, 25, 9, 0), "hello", False),
+            _v1.Entry(datetime.datetime(2025, 11, 24, 9, 0), "hello", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 24, 17, 0), "work: old", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 25, 9, 0), "hello", False, None),
         ]
 
         handler = BalanceHandler(mock_args, now, entries, mock_output)
@@ -263,9 +301,9 @@ class TestFilterAndClipActivities:
     def test_clips_overnight_activity_into_range(self, mock_args, mock_output):
         now = datetime.datetime(2025, 11, 26, 17, 0, 0)
         entries = [
-            _v1.Entry(datetime.datetime(2025, 11, 25, 17, 0), "work: old", False),
-            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False),
-            _v1.Entry(datetime.datetime(2025, 11, 26, 17, 0), "work: today", False),
+            _v1.Entry(datetime.datetime(2025, 11, 25, 17, 0), "work: old", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 17, 0), "work: today", False, None),
         ]
 
         handler = BalanceHandler(mock_args, now, entries, mock_output)
@@ -392,8 +430,8 @@ class TestCall:
         # Wednesday Nov 26, 2025
         now = datetime.datetime(2025, 11, 26, 17, 0, 0)
         entries = [
-            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False),
-            _v1.Entry(datetime.datetime(2025, 11, 26, 17, 0), "work: task", False),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 17, 0), "work: task", False, None),
         ]
 
         handler = BalanceHandler(mock_args, now, entries, mock_output)
@@ -409,14 +447,14 @@ class TestCall:
         mock_args.week_start = "sunday"
         entries = [
             # Monday
-            _v1.Entry(datetime.datetime(2025, 11, 24, 9, 0), "hello", False),
-            _v1.Entry(datetime.datetime(2025, 11, 24, 17, 0), "work: mon", False),
+            _v1.Entry(datetime.datetime(2025, 11, 24, 9, 0), "hello", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 24, 17, 0), "work: mon", False, None),
             # Tuesday
-            _v1.Entry(datetime.datetime(2025, 11, 25, 9, 0), "hello", False),
-            _v1.Entry(datetime.datetime(2025, 11, 25, 17, 0), "work: tue", False),
+            _v1.Entry(datetime.datetime(2025, 11, 25, 9, 0), "hello", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 25, 17, 0), "work: tue", False, None),
             # Wednesday
-            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False),
-            _v1.Entry(datetime.datetime(2025, 11, 26, 17, 0), "work: wed", False),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 17, 0), "work: wed", False, None),
         ]
 
         handler = BalanceHandler(mock_args, now, entries, mock_output)
@@ -443,8 +481,8 @@ class TestCall:
         mock_args.daily_hrs = 6
         mock_args.weekly_hrs = 30
         entries = [
-            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False),
-            _v1.Entry(datetime.datetime(2025, 11, 26, 15, 0), "work: task", False),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 9, 0), "hello", False, None),
+            _v1.Entry(datetime.datetime(2025, 11, 26, 15, 0), "work: task", False, None),
         ]
 
         handler = BalanceHandler(mock_args, now, entries, mock_output)
