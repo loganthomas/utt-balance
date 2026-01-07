@@ -213,6 +213,7 @@ class BalanceHandler:
                 prev_entry.datetime,
                 next_entry.datetime,
                 False,
+                next_entry.comment,
             )
 
     def _filter_and_clip_activities(
